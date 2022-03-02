@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 // fonts
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
-
+import EvilIcons from "react-native-vector-icons/EvilIcons"
 
 // screens
 import HomeScreen from "../../screens/homeScreen"
@@ -24,8 +24,9 @@ export default function MyTabs() {
              >
             
             
-            <Tab.Screen name="Home" 
-            options={{
+            <Tab.Screen 
+             name="Home" 
+             options={{
                 headerShown: false,
                 tabBarLabel: "Home",
                 tabBarLabelStyle: {
@@ -44,7 +45,10 @@ export default function MyTabs() {
             
             component={HomeScreen} />
 
-            <Tab.Screen name="Coins Status"
+           
+           
+            <Tab.Screen 
+             name="Coins Status"
              options={{
                 headerShown: false,
                 tabBarLabel: "Coin Status",
@@ -64,7 +68,8 @@ export default function MyTabs() {
             component={ListingStatus} />
 
 
-      <Tab.Screen name="Search"
+           <Tab.Screen
+             name="Search"
              options={{
                 headerShown: false,
                 tabBarLabel: "Search",
@@ -77,11 +82,14 @@ export default function MyTabs() {
                 },
                 tabBarIcon: (tabInfo) => {
                     return (
-                        <FontAwesome5 name="search" size={30} color={ tabInfo.focused ? "blue":"lightgrey"} />)
+                        <EvilIcons name="search" size={30} color={ tabInfo.focused ? "blue":"lightgrey"} />)
                   },
             }} 
             
             component={SearchScreen} />
+
+
+
             </Tab.Navigator>
   </NavigationContainer>
   );

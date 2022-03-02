@@ -10,12 +10,15 @@ export default StyleSheet.create({
    
     container:{
      flex:1,
-     flexDirection:'row',
-     justifyContent:'center',
-     textAlign:'center',
-     backgroundColor:'blue',
-     color:'#ffff'
+     flexDirection:'column',
+     top:'10%',
+     padding:10,
+     bottom:"10%"
     },
+    scrollContainer:{
+        flex:1,
+        marginBottom:20
+    }
     
 });
 

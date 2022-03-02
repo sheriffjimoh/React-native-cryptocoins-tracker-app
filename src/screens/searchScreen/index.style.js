@@ -13,7 +13,7 @@ export default StyleSheet.create({
         flex:1,
         flexDirection:'row',
         justifyContent:'center',
-        backgroundColor:'blue',
+         top:'10%'
        },
     
 });
