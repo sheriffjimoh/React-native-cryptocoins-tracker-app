@@ -13,11 +13,10 @@ export default StyleSheet.create({
      flexDirection:'column',
      top:'10%',
      padding:10,
-     bottom:"10%"
     },
     scrollContainer:{
         flex:1,
-        marginBottom:20
+        paddingBottom:20
     }
     
 });
