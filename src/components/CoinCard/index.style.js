@@ -18,10 +18,10 @@ export default StyleSheet.create({
 
        },
        rankContainer:{
-           flexBasis:"5%",
+           flexBasis:"9%",
            textAlign:'center',
            alignContent:'center',
-           backgroundColor:'#f4f4f4f4',
+        //    backgroundColor:'#f4f4f4f4',
            padding:5,
            height:35,
            right:5,
@@ -35,7 +35,7 @@ export default StyleSheet.create({
        },
        coinNameCointainer:{
            marginTop:3,
-           flexBasis:'40%'
+           flexBasis:'20%'
        },
        coinSymbol:{
            fontWeight:'700'
@@ -45,7 +45,7 @@ export default StyleSheet.create({
            color:'grey'
        },
        chartContainer:{
-           flexBasis:'30%'
+           flexBasis:'40%'
        },
        priceText:{
            fontWeight:'bold',
@@ -69,7 +69,8 @@ export default StyleSheet.create({
 
        bargeText:{
            textAlign:'center',
-           color:'#fff'
+           color:'#fff',
+           width:76
 
        }
 });

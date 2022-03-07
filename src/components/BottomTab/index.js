@@ -19,7 +19,7 @@ export default function MyTabs() {
             <Tab.Navigator 
              initialRouteName="Home"
              screenOptions={{
-                tabBarStyle: { position: 'absolute', height:70 },
+                tabBarStyle: { position: 'absolute', height:75 },
               }}
              >
             
@@ -33,13 +33,12 @@ export default function MyTabs() {
                 fontSize: 15,
                 marginBottom:10
                 },
-                tabBarOptions: {
-                 activeTintColor: "blue",
-                 color:'blue'
-                },
+            
+                tabBarActiveTintColor: '#4845ff',
+                tabBarInactiveTintColor: 'lightgrey',
                 tabBarIcon: (tabInfo) => {
                     return (
-                        <AntDesign name="home" size={30} color={ tabInfo.focused ? "blue":"lightgrey"} />)
+                        <AntDesign name="home" size={30} color={ tabInfo.focused ? "#4845ff":"lightgrey"} />)
                   },
             }} 
             
@@ -56,12 +55,12 @@ export default function MyTabs() {
                     fontSize: 15,
                     marginBottom:10
                     },
-                tabBarOptions: {
-                 activeTintColor: "blue",
-                },
+               
+                tabBarActiveTintColor: '#4845ff',
+                tabBarInactiveTintColor: 'lightgrey',
                 tabBarIcon: (tabInfo) => {
                     return (
-                        <FontAwesome5 name="coins" size={30} color={ tabInfo.focused ? "blue":"lightgrey"} />)
+                        <FontAwesome5 name="coins" size={30} color={ tabInfo.focused ? "#4845ff":"lightgrey"} />)
                   },
             }} 
             
@@ -77,12 +76,12 @@ export default function MyTabs() {
                     fontSize: 15,
                     marginBottom:10
                     },
-                tabBarOptions: {
-                 activeTintColor: "blue",
-                },
+               
+                tabBarActiveTintColor: '#4845ff',
+               tabBarInactiveTintColor: 'lightgrey',
                 tabBarIcon: (tabInfo) => {
                     return (
-                        <EvilIcons name="search" size={30} color={ tabInfo.focused ? "blue":"lightgrey"} />)
+                        <EvilIcons name="search" size={30} color={ tabInfo.focused ? "#4845ff":"lightgrey"} />)
                   },
             }} 
             

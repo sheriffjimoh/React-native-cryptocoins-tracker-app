@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import BottomTabs from "./src/components/BottomTab"
 const CoinMarketCap = require('coinmarketcap-api')
+import services from "./src/services"
 
 
 export default function App() {
@@ -11,6 +12,7 @@ export default function App() {
 
   const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
   const client = new CoinMarketCap(apiKey)
+
   
  
   // client.getGlobal().then(console.log).catch(console.error)
@@ -21,7 +23,8 @@ export default function App() {
   //   client.getTickers()
   // console.log("NEW SET ++++++++++=")
   //  client.getGlobal()
-
+  // const getCoinsList = getCoinsList;
+  // console.log("List:", services.getCoinsList());
   // get active coins
   // client.getIdMap({listingStatus: 'active', limit: 10})
 
