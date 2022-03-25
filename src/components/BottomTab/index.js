@@ -15,7 +15,6 @@ import SearchScreen from "../../screens/searchScreen"
 export default function MyTabs() {
     const Tab = createBottomTabNavigator();
   return (
-      <NavigationContainer>
             <Tab.Navigator 
              initialRouteName="Home"
              screenOptions={{
@@ -90,6 +89,5 @@ export default function MyTabs() {
 
 
             </Tab.Navigator>
-  </NavigationContainer>
   );
 }

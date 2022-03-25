@@ -4,7 +4,7 @@ import styles  from  "./index.style"
 import LineCharts from "../../components/Chart"
 
 export default  function App(props) {
-   let {rank,name,symbol, price, num_cum,chartsData} = props;
+   let {rank,name,symbol, price, num_cum,chartsData,activeTab,marketcap} = props;
 
   
   const CoinCharts = () =>{
@@ -17,6 +17,32 @@ export default  function App(props) {
            return(
                <View />
            )
+       }
+   }
+
+   const CheckTab = () => {
+       if(activeTab == 'top'){
+
+        return(
+            <View>
+                    <Text style={styles.priceText} numberOfLines={1}> ${Math.round(price * 100) / 100} </Text>
+                            
+                    {num_cum > 1
+                    ? <View style={[styles.bargecum, styles.bargeSuccess]}>
+                    <Text style={styles.bargeText} >+{Math.round(num_cum * 10000) / 10000}%</Text>
+                </View>:
+                    <View style={[styles.bargecum, styles.bargeerror]}>
+                    <Text style={styles.bargeText} >{Math.round(num_cum * 10000) / 10000}%</Text>
+                    </View>
+                }
+                </View>
+        )
+       }else{
+           return( 
+           <View style={{width:100, overflowX:'scroll',  marginLeft:20}}>
+              <Text  tyle={styles.priceText} > {Math.round(marketcap * 1000) / 1000} </Text>
+          </View>    
+        )     
        }
    }
     return (
@@ -35,16 +61,8 @@ export default  function App(props) {
              </View>
 
              <View style={styles.priceContainer}>
-                  <Text style={styles.priceText} numberOfLines={1}> ${Math.round(price * 100) / 100} </Text>
-                   
-                   {num_cum > 1
-                   ? <View style={[styles.bargecum, styles.bargeSuccess]}>
-                   <Text style={styles.bargeText} >+{Math.round(num_cum * 10000) / 10000}%</Text>
-                  </View>:
-                   <View style={[styles.bargecum, styles.bargeerror]}>
-                   <Text style={styles.bargeText} >{Math.round(num_cum * 10000) / 10000}%</Text>
-                   </View>
-                }
+                 
+                  <CheckTab />
                   
              </View>
         </View>

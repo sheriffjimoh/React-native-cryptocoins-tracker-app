@@ -11,23 +11,27 @@ export default  function App() {
     let _ismount = false;
 
    const[getList, setList] = useState([]);
+   const [activeTab, setActiveTab] = useState('top')
    
     function getCoinsList(){
+        console.log("reach")
         client.getTickers({limit:100})
-        .then((response) => { setList(response.data)})
+        .then((response) => { 
+
+            if(getList.length < 1 ){
+                 setList(response.data);
+                 console.log("Updated")
+            }
+        })
         .catch((error) => console.log(error));
     }
 
     useEffect(() => {
-       _ismount = true;
-        // if(!_ismount){
-           getCoinsList();
-           
-        // }
-       
+        if(getList.length < 1 ){
+           getCoinsList();   
+        }  
     },[]);
 
-    // console.log(_ismount)
  const LoadCoins =()=>{
 
     if(getList.length > 1){
@@ -43,7 +47,9 @@ export default  function App() {
                 data.quote.USD.percent_change_60d,
                 data.quote.USD.percent_change_90d
             ]
-            }/>
+            }
+            marketcap={data.quote.USD.market_cap}  activeTab={activeTab}
+            />
        )
    }) 
     }else{
@@ -53,7 +59,7 @@ export default  function App() {
     }
   
  }
-    // console.log(getList)
+   
     return (
         <View  style={styles.container}>
 
@@ -65,14 +71,20 @@ export default  function App() {
                     <Text style={styles.cointitle}>Coins</Text>
 
                      <View style={styles.filters}>
-                          <TouchableOpacity style={[styles.button, styles.activeButtn]}>
-                               <MaterialCommunityIcons  name="align-vertical-top" size={18} color="#4845ff">
-                                     <Text style={styles.buttonText}> Top 100</Text>
+                          <TouchableOpacity style={[styles.button, activeTab == 'top' ? styles.activeButton : '']}
+                          onPress={()=>{
+                            setActiveTab('top')
+                          }}
+                          >
+                               <MaterialCommunityIcons  name="align-vertical-top" size={18} color={activeTab == 'top' ? "#fff": "#4845ff"}>
+                                     <Text style={[styles.buttonText, activeTab == 'top' ? {color:'#fff'} :'']}> Top 100</Text>
                                </MaterialCommunityIcons>
                           </TouchableOpacity>
-                          <TouchableOpacity style={[styles.button, styles.activeButtn]}>
-                               <Text style={[styles.buttonText,{marginLeft:8}]}>Market Cap   </Text>
-                               <MaterialCommunityIcons  name="equalizer" size={20} color="#4845ff"/>
+                          <TouchableOpacity style={[styles.button,activeTab == 'cap' ? styles.activeButton : '']} onPress={()=>{
+                              setActiveTab('cap')
+                          }}>
+                               <Text style={[styles.buttonText,{marginLeft:8} , activeTab == 'cap' ? {color:'#fff'} : '']}>Market Cap   </Text>
+                               <MaterialCommunityIcons  name="equalizer" size={20} color={activeTab == 'cap' ? "#fff": "#4845ff"}/>
                           </TouchableOpacity>
                      </View>
                 </View>
@@ -82,7 +94,7 @@ export default  function App() {
                  <Text style={styles.listTitle}>Coin</Text>
                  <Text  style={styles.listTitle}>Charts</Text>
 
-                 <Text  style={styles.listTitlel}>Price / % change 24hr </Text>
+                 <Text  style={styles.listTitlel}> { activeTab == 'cap' ? 'Market Cap' : 'Price / % change 24hr '}</Text>
             </View>
           
             <ScrollView showsVerticalScrollIndicator={false}

@@ -14,8 +14,8 @@ export default StyleSheet.create({
         padding:15,
         backgroundColor:'#fff',
         height:76,
-        marginBottom:10
-
+        marginBottom:10,
+     
        },
        rankContainer:{
            flexBasis:"9%",

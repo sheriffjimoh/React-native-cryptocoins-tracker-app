@@ -33,10 +33,12 @@ export default StyleSheet.create({
     listTitle:{
         textAlign:'center',
         flexBasis:'20%',
-        fontSize:15
+        fontSize:15,
+        fontWeight:'800'
     },
     listTitlel:{
-        fontSize:15
+        fontSize:15,
+        fontWeight:'800'
     },
     leftsideText:{
       color:'#4845ff',

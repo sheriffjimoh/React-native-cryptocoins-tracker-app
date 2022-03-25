@@ -4,11 +4,9 @@ import React, { useState, useEffect } from 'react';
 import BottomTabs from "./src/components/BottomTab"
 const CoinMarketCap = require('coinmarketcap-api')
 import services from "./src/services"
-
+import NavStack from "./src/components/Navigation"
 
 export default function App() {
-
-  const [count, setCount] = useState(0);
 
   const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
   const client = new CoinMarketCap(apiKey)
@@ -26,7 +24,7 @@ export default function App() {
   // const getCoinsList = getCoinsList;
   // console.log("List:", services.getCoinsList());
   // get active coins
-  // client.getIdMap({listingStatus: 'active', limit: 10})
+  client.getIdMap({listingStatus: 'inactive', limit: 10})
 
   // display coins by cmc_rank
   // client.getIdMap({sort: 'cmc_rank'}) 
@@ -34,15 +32,15 @@ export default function App() {
   // get more details for each coin
   // client.getMetadata({id: '1'})
   // client.getTickers({limit: 3})
-  // .then((result) => console.log(result))
-  // .catch((error) => console.error(error))
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error))
 
    });
   return (
     <View style={styles.container}>
       {/* <Text>Crypto currency trakcer app !</Text>
       <StatusBar style="auto" /> */}
-      <BottomTabs /> 
+      <NavStack /> 
     </View>
   );
 }
