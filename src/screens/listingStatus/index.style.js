@@ -54,7 +54,8 @@ export default StyleSheet.create({
        flexDirection:"row",
        justifyContent:'space-between',
        width:'70%',
-       marginTop:5
+       marginTop:10,
+       marginBottom:10
       
     },
     cointitle:{

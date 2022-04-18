@@ -5,16 +5,14 @@ const Stack = createStackNavigator();
 
 import BottomTab from "../BottomTab";
 import Settings from "../../screens/settingScreen"
+import CoinDetails from "../../screens/coinDetails"
 
 export default function NavStack() {
   return (
       <NavigationContainer>
             <Stack.Navigator initialRouteName="HomeScreen">
-                    <Stack.Screen
-                     options={{headerShown: false,}}
-                    name="HomeScreen" component={BottomTab} />
-                   
-                    <Stack.Screen name="ConDetails" component={Settings} />
+             <Stack.Screen options={{headerShown: false,}} name="Home" component={BottomTab} />
+              <Stack.Screen name="CoinDetails" initialParams={{coinID: null}} component={CoinDetails} />
         </Stack.Navigator>
     </NavigationContainer>
   );

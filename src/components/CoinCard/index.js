@@ -1,12 +1,10 @@
 import react from "react";
-import {View, Text} from "react-native"
+import {View, Text, TouchableOpacity} from "react-native"
 import styles  from  "./index.style"
 import LineCharts from "../../components/Chart"
 
 export default  function App(props) {
-   let {rank,name,symbol, price, num_cum,chartsData,activeTab,marketcap} = props;
-
-  
+   let {rank,name,symbol,item, id, price, num_cum,chartsData,activeTab,marketcap,navigation} = props;
   const CoinCharts = () =>{
        if(chartsData.length > 1){
            return(
@@ -46,7 +44,7 @@ export default  function App(props) {
        }
    }
     return (
-        <View  style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.navigate('CoinDetails', {data: {coinID:id, chartsData:chartsData, item:item}})}  style={styles.container}>
              <View style={styles.rankContainer}>
                  <Text styles={styles.rankText} >{rank}</Text>
              </View>
@@ -65,6 +63,6 @@ export default  function App(props) {
                   <CheckTab />
                   
              </View>
-        </View>
+        </TouchableOpacity>
     );
   }

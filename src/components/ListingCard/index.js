@@ -1,9 +1,8 @@
 import react from "react";
 import {View,Text} from 'react-native';
-import Index from "../../screens/listingStatus";
 import styles  from  "./index.style"
 
-export default function ListingCard(props){
+export default function App(props){
 
     const {id, name,symbol,rank,last_historical_data} = props.data;
  

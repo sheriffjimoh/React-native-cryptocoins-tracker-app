@@ -16,15 +16,15 @@ export default function MyTabs() {
     const Tab = createBottomTabNavigator();
   return (
             <Tab.Navigator 
-             initialRouteName="Home"
+             initialRouteName="Home-draw"
              screenOptions={{
-                tabBarStyle: { position: 'absolute', height:75 },
+                tabBarStyle: { position: 'absolute', height:100 },
               }}
              >
             
             
             <Tab.Screen 
-             name="Home" 
+             name="Home-draw" 
              options={{
                 headerShown: false,
                 tabBarLabel: "Home",

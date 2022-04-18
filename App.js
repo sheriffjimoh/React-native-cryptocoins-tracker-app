@@ -24,16 +24,16 @@ export default function App() {
   // const getCoinsList = getCoinsList;
   // console.log("List:", services.getCoinsList());
   // get active coins
-  client.getIdMap({listingStatus: 'inactive', limit: 10})
+  // client.getIdMap({listingStatus: 'inactive', limit: 10})
 
   // display coins by cmc_rank
   // client.getIdMap({sort: 'cmc_rank'}) 
 
   // get more details for each coin
   // client.getMetadata({id: '1'})
-  // client.getTickers({limit: 3})
-  .then((result) => console.log(result))
-  .catch((error) => console.error(error))
+  // // client.getTickers({limit: 3})
+  // .then((result) => console.log(result))
+  // .catch((error) => console.error(error))
 
    });
   return (
