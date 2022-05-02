@@ -25,7 +25,7 @@ export default StyleSheet.create({
            padding:5,
            height:35,
            right:5,
-           top:7,
+           top:20,
            fontSize:20,
            marginRight:5
        },
@@ -34,7 +34,7 @@ export default StyleSheet.create({
 
        },
        coinNameCointainer:{
-           marginTop:3,
+           marginTop:17,
            flexBasis:'20%'
        },
        coinSymbol:{
@@ -72,6 +72,9 @@ export default StyleSheet.create({
            color:'#fff',
            width:76
 
+       },
+       priceContainer:{
+           top:10
        }
 });
 

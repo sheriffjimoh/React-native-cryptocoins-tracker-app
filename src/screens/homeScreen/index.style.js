@@ -80,8 +80,7 @@ export default StyleSheet.create({
          textAlign:'center',
          color:'#4845ff',
          fontWeight:'bold'
-        
-         
+    
      },
      activeButton:{
          backgroundColor:'#4845ff'

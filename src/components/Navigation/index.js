@@ -12,7 +12,7 @@ export default function NavStack() {
       <NavigationContainer>
             <Stack.Navigator initialRouteName="HomeScreen">
              <Stack.Screen options={{headerShown: false,}} name="Home" component={BottomTab} />
-              <Stack.Screen name="CoinDetails" initialParams={{coinID: null}} component={CoinDetails} />
+              <Stack.Screen name="CoinDetails" initialParams={{data: null}} component={CoinDetails} />
         </Stack.Navigator>
     </NavigationContainer>
   );

@@ -91,6 +91,7 @@ export default  function App() {
                      </View>
                 </View>
             {/* </View> */}
+            
 
             <View  style={styles.listTitleContainer}>
                  <Text style={styles.listTitle}>Rank</Text>

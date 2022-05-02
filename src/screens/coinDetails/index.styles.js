@@ -72,11 +72,10 @@ export default StyleSheet.create({
     alignContent:'center',
     backgroundColor:'#f4f4f4f4',
     padding:5,
-    height:38,
-    top:5,
+    height:40,
     fontSize:20,
     marginRight:8,
-    paddingTop:10
+    paddingTop:12,
 },
 rankText:{
     fontSize:20,

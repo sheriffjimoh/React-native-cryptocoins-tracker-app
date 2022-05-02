@@ -2,6 +2,7 @@ import react from "react";
 import {View, Text, TouchableOpacity} from "react-native"
 import styles  from  "./index.style"
 import LineCharts from "../../components/Chart"
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 
 export default  function App(props) {
    let {rank,name,symbol,item, id, price, num_cum,chartsData,activeTab,marketcap,navigation} = props;
@@ -44,14 +45,14 @@ export default  function App(props) {
        }
    }
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('CoinDetails', {data: {coinID:id, chartsData:chartsData, item:item}})}  style={styles.container}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate('CoinDetails', {data: {coinID:id, chartsData:chartsData, item:item}})}  style={styles.container}>
              <View style={styles.rankContainer}>
                  <Text styles={styles.rankText} >{rank}</Text>
              </View>
 
              <View style={styles.coinNameCointainer}>
                     <Text style={styles.coinSymbol}>{symbol}</Text>
-                    <Text style={styles.coinName}>{name}</Text>
+                    <Text style={styles.coinName} numberOfLines={1}>{name}</Text>
              </View>
 
              <View  style={styles.chartContainer}>
@@ -63,6 +64,6 @@ export default  function App(props) {
                   <CheckTab />
                   
              </View>
-        </TouchableOpacity>
+        </TouchableWithoutFeedback>
     );
   }

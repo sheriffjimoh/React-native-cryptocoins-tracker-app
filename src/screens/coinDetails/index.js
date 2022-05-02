@@ -14,15 +14,11 @@ export default  function App(props) {
    useEffect(() => {
     client.getMetadata({id: data.coinID})
     .then((result) =>{
-
      const dataResult = Object.values(result.data)
      setDetails(dataResult[0]);
-     console.log("All:", getDetails.urls.website[0])
-
     })
     .catch((error) => console.error(error))
-    
-   console.log(data.item)
+     console.log(data.item);
     },[]);
     return (
         <View  style={styles.container}>
@@ -61,7 +57,7 @@ export default  function App(props) {
                 
                 <View style={styles.descContainer}>
                     <Text style={styles.descText}>
-                         {getDetails.description.replace(getDetails?.name, `${<Text>{getDetails?.name}</Text>}`)}
+                         {getDetails.description}
                     </Text>
                 </View>
            </View>
