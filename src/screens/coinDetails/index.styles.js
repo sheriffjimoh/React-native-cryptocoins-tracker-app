@@ -102,7 +102,10 @@ priceText:{
 },
 addressContainer:{
   paddingLeft:18,
-  marginTop:10
+  marginTop:10,
+  marginBottom:10,
+  backgroundColor:'#f4f4f4',
+  height:150
 },
 addressTitle:{
   fontWeight:'900',
@@ -110,8 +113,9 @@ addressTitle:{
   width:'100%',
   borderBottomColor:'#f4f4f4',
   borderBottomWidth:1,
-  paddingBottom:15,
-  marginBottom:10
+  paddingBottom:5,
+  paddingTop:5,
+  marginBottom:5
 },
 ContainerAddressCard:{
 

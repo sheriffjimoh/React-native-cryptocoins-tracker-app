@@ -5,6 +5,7 @@ import BottomTabs from "./src/components/BottomTab"
 const CoinMarketCap = require('coinmarketcap-api')
 import services from "./src/services"
 import NavStack from "./src/components/Navigation"
+import FlashMessage from "react-native-flash-message";
 
 export default function App() {
 
@@ -41,6 +42,7 @@ export default function App() {
       {/* <Text>Crypto currency trakcer app !</Text>
       <StatusBar style="auto" /> */}
       <NavStack /> 
+      <FlashMessage position="top" />
     </View>
   );
 }
