@@ -88,8 +88,79 @@ descContainer:{
 descText:{
   fontSize:15,
   fontFamily:'Avenir'
+},
+priceContainer:{
+  paddingLeft:18,
+  padding:5,
+  
+},
+priceText:{
+  fontSize:15,
+  paddingTop:5,
+  fontFamily:'Avenir',
+  fontWeight:'800'
+},
+addressContainer:{
+  paddingLeft:18,
+  marginTop:10
+},
+addressTitle:{
+  fontWeight:'900',
+  fontSize:15,
+  width:'100%',
+  borderBottomColor:'#f4f4f4',
+  borderBottomWidth:1,
+  paddingBottom:15,
+  marginBottom:10
+},
+ContainerAddressCard:{
+
+  flex:1,
+  flexDirection:'row',
+  justifyContent:'space-between',
+  elevation:2,
+  shadowOffset:{
+      width:0,
+      height:2
+  },
+  shadowOpacity:0.1,
+  shadowRadius:2,
+  backgroundColor:'#fff',
+  padding:10,
+  width:200,
+  fontFamily:'Avenir',
+  height:90,
+  marginRight:15
+},
+plat:{
+  // font
+  fontFamily:'Avenir',
+  fontWeight:'900',
+  textTransform:'uppercase',
+  marginBottom:5
+},
+
+copyButton:{
+  backgroundColor:'#fff',
+  padding:5,
+  borderRadius:20,
+  textAlign:'center',
+  flexDirection:'row',
+  justifyContent:'center',
+  alignContent:'center',
+  marginTop:5,
+  width:70,
+  borderColor:'#f4f4f4',
+  borderWidth:2
+},
+// buttonText:{
+//   textAlign:'center',
+//   color:'#fff',
+//   fontWeight:'bold'
+// },
+
+addCon:{
+  marginTop:18
 }
-
-
 });
 

@@ -11,11 +11,10 @@ export default  function App({navigation}) {
     let _ismount = false;
    const[getList, setList] = useState([]);
    const [activeTab, setActiveTab] = useState('top')
-   const [isLoading, setIsLoading] = useState(false)
+   const [isLoading, setIsLoading] = useState(true)
    
    
    function getCoinsList(){
-        setIsLoading(true)
         client.getTickers({limit:100})
         .then((response) => { 
             if (response.status) {
