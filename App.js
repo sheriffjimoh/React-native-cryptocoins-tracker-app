@@ -6,13 +6,19 @@ const CoinMarketCap = require('coinmarketcap-api')
 import services from "./src/services"
 import NavStack from "./src/components/Navigation"
 import FlashMessage from "react-native-flash-message";
-
+// import { useFonts,Feather} from 'expo-font';
 export default function App() {
 
   const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
   const client = new CoinMarketCap(apiKey)
 
-  
+  // let [fontsLoaded] = useFonts({
+  //   Avenir: require("./assets/fonts/AvenirLTStd-Book.otf"),
+  //   "Avenir-Bold": require("./assets/fonts/AvenirLTStd-Black.otf"),
+  //   "Avenir-Roman": require("./assets/fonts/AvenirLTStd-Roman.otf"),
+  //   Feather
+  // });
+ 
  
   // client.getGlobal().then(console.log).catch(console.error)
 

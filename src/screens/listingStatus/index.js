@@ -8,7 +8,7 @@ import ListingCard from "../../components/ListingCard"
 const CoinMarketCap = require('coinmarketcap-api')
 const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
 const  client = new CoinMarketCap(apiKey)
-export default  function App() {
+export default  function App(props) {
     const [activeTab, setActiveTab] = useState('active');
      const [isLoading, setIsLoading] = useState(false)
     const [getList, setList] = useState([]);
@@ -47,7 +47,7 @@ export default  function App() {
             <FlatList
             data={getList}
             renderItem={({ item, index, separators }) => (
-                <ListingCard key={index} rank={index+1} data={item} />
+                <ListingCard key={index}  navigation={props.navigation} rank={index+1} data={item} />
             
             )}
             showsVerticalScrollIndicator={false}

@@ -8,7 +8,7 @@ const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
 const  client = new CoinMarketCap(apiKey)
 
 export default  function App({navigation}) {
-    let _ismount = false;
+
    const[getList, setList] = useState([]);
    const [activeTab, setActiveTab] = useState('top')
    const [isLoading, setIsLoading] = useState(true)
@@ -61,12 +61,17 @@ export default  function App({navigation}) {
         )}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index}
-        style={styles.scrollContainer}
+        // style={styles.scrollContainer}
         onRefresh={() => 
           getCoinsList()
         }
         refreshing={isLoading}
         removeClippedSubviews={true}
+        ListFooterComponent={
+          <View style={{height:150,  flex:1, justifyContent:'center', alignItems:'center', alignContent:'center'}}>
+            
+          </View>
+        }
       />
 
 
@@ -106,7 +111,7 @@ export default  function App({navigation}) {
                           </TouchableOpacity>
                      </View>
                 </View>
-            {/* </View> */}
+         
 
             <View  style={styles.listTitleContainer}>
                  <Text style={styles.listTitle}>Coin</Text>
@@ -115,14 +120,11 @@ export default  function App({navigation}) {
                  <Text  style={styles.listTitlel}> { activeTab == 'cap' ? 'Market Cap' : 'Price / % change 24hr '}</Text>
             </View>
           
-            {/* <ScrollView showsVerticalScrollIndicator={false}
-             contentInset={{bottom: 120}} 
-             style={styles.scrollContainer}
-             > */}
-               <LoadCoins />
-            {/* <Text/>
-            <Text/>
-            </ScrollView> */}
+                <View style={{flex:1,  marginTop:20}}>
+                  <LoadCoins />
+                </View>
+               
+          
         </View>
     );
   }

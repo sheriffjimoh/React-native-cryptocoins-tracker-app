@@ -1,5 +1,5 @@
 import react from "react";
-import {View,Text} from 'react-native';
+import {View,Text, TouchableWithoutFeedback} from 'react-native';
 import styles  from  "./index.style"
 
 export default function App(props){
@@ -7,9 +7,13 @@ export default function App(props){
     const {id, name,symbol,rank,last_historical_data} = props.data;
  
 
+    console.log(props.data)
     return(
 
-        <View style={styles.container}>
+      
+        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('CoinDetails', {data: {coinID:id, }})}  
+            >
+                  <View style={styles.container}>
             <View style={styles.rankContainer}>
                 <Text style={styles.rankText}>{props.rank}</Text>
             </View>
@@ -19,10 +23,11 @@ export default function App(props){
                 
             </View>
             <View style={styles.dateContainer}>
-                <Text>2022/09/12</Text>
+                <Text>{new Date(last_historical_data).toLocaleDateString()}</Text>
             </View>
-            
-        </View>
+            </View>
+        </TouchableWithoutFeedback>
+       
 
     )
 

@@ -11,9 +11,9 @@ export default StyleSheet.create({
      
     container:{
         flex:1,
-        // alignContent:'center',
-        // alignItems:'center',
         backgroundColor:'#fff',
+        height:height,
+        width:width
          
      },
 
@@ -65,7 +65,9 @@ export default StyleSheet.create({
   },
   chartContainer:{
     padding:20,
-    paddingTop:0
+    paddingTop:0,
+    marginBottom:30,
+    height:height
   },
   rankContainer:{
     textAlign:'center',
@@ -157,14 +159,30 @@ copyButton:{
   borderColor:'#f4f4f4',
   borderWidth:2
 },
-// buttonText:{
-//   textAlign:'center',
-//   color:'#fff',
-//   fontWeight:'bold'
-// },
-
 addCon:{
   marginTop:18
-}
+},
+exploreContainer:{
+  marginTop:20,
+  
+},
+exploreText:{
+  fontSize:30,
+  borderBottomColor:'red',
+  borderBottomWidth:2,
+},
+exploreLink:{
+  paddingLeft:5,
+  color:'#4845ff',
+  marginTop:5
+},
+subContainer:{
+ 
+},
+
+
+
+
+
 });
 

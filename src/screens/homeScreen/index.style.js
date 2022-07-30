@@ -3,7 +3,7 @@ import { StyleSheet, Platform} from 'react-native';
 import { Dimensions } from "react-native";
 
 var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
+var height = Dimensions.get('window').height; //full heigth
 
 
 export default StyleSheet.create({
@@ -12,11 +12,13 @@ export default StyleSheet.create({
      flex:1,
      flexDirection:'column',
      padding:10,
-
      backgroundColor:'#fff',
+     height:height
     },
     scrollContainer:{
-        top:'5%'
+        flex:1,
+        width:'100%',
+        // height:height
     },
     listTitleContainer:{
         flexDirection:'row',

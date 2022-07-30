@@ -1,5 +1,5 @@
-import react,{useEffect, useState} from "react";
-import {View, Text,Image, TouchableOpacity,Linking, ScrollView} from "react-native"
+import react,{useEffect, useState, useRef} from "react";
+import {View, Text,Image, TouchableOpacity,Linking, ScrollView, ActivityIndicator} from "react-native"
 import styles  from  "./index.styles"
 const CoinMarketCap = require('coinmarketcap-api')
 const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
@@ -12,29 +12,61 @@ import { customFlash } from "../../components/customFlashMessage/customFlash";
 
 
 export default  function App(props) {
- const data = props.route.params.data;
+ const params = props.route.params.data;
+
+ 
  const [getDetails, setDetails] = useState([]);
+ const [data, setData] = useState({quote: null})
+ const [isLoading, setLoading] = useState(false)
+ const [chartsData, setChartdata] = useState([]);
 
-  const [copiedText, setCopiedText] = useState('');
+ const [copiedText, setCopiedText] = useState('');
 
-  const copyToClipboard = async (text) => {
+ const copyToClipboard = async (text) => {
     await Clipboard.setString(text);
     customFlash('success',`Token copied to the clipboard`)
     };
 
-  const fetchCopiedText = async () => {
+    const scrollViewRef = useRef();
+const fetchCopiedText = async () => {
     const text = await Clipboard.getStringAsync();
     setCopiedText(text);
   };
    
+   function getConiDetails(){
+    setLoading(true)
+     
+      client.getQuotes(({id: params.coinID}))
+      .then((response) => { 
+        setData(Object.values(response.data)[0]);
+        const result = Object.values(response.data)[0];
+        const chartsData=
+          [
+             result?.quote?.USD?.percent_change_1h,
+             result?.quote?.USD?.percent_change_24h,
+             result.quote.USD.percent_change_7d,
+             result.quote.USD.percent_change_30d,
+             result.quote.USD.percent_change_60d,
+             result.quote.USD.percent_change_90d
+           ];
+
+           setChartdata(chartsData);
+         
+        // console.log("Tiker:",chartsData)
+      }).catch((error) => console.log(error))
+      .finally(() => setLoading(false))
+    }
 
    useEffect(() => {
-    client.getMetadata({id: data.coinID})
+    client.getMetadata({id: params.coinID})
     .then((result) =>{
      const dataResult = Object.values(result.data)
      setDetails(dataResult[0]);
+
    })
-    .catch((error) => console.error(error))
+    .catch((error) => console.error(error));
+
+    getConiDetails();
    
     },[]);
 
@@ -73,14 +105,115 @@ export default  function App(props) {
       }
 
     }
+
+    const Websites = () =>{
+
+      if (getDetails?.urls?.website[0]) {
+
+        return(
+          <View style={styles.exploreContainer}>
+          <Text style={styles.exploreText}> Website</Text>
+          <TouchableOpacity onPress={()=> Linking.openURL(getDetails?.urls?.website[0])}>
+            <Text style={styles.exploreLink}>{getDetails?.urls?.website[0]}</Text>
+          </TouchableOpacity>
+        </View>  
+        )
+        
+      }else{
+        return(<View/>)
+      }
+
+    }
     
+
+     const Chat = () =>{
+       if (getDetails?.urls?.chat[0]) {
+
+        return(
+          <View style={styles.exploreContainer}>
+          <Text style={styles.exploreText}> Chat</Text>
+         <TouchableOpacity  onPress={()=> Linking.openURL(getDetails?.urls?.chat[0])}>
+             <Text style={styles.exploreLink}>{getDetails?.urls?.chat[0]}</Text> 
+         </TouchableOpacity >
+     </View> 
+        )
+      }else{
+        return(<View/>)
+      }
+     }
+
+    const Announcement = () =>{
+      if (getDetails?.urls?.announcement[0]) {
+         return(
+          <View style={styles.exploreContainer}>
+          <Text style={styles.exploreText}> Announcement</Text>
+          <TouchableOpacity onPress={()=> Linking.openURL(getDetails?.urls?.announcement[0])}>
+            <Text style={styles.exploreLink}>{getDetails?.urls?.announcement[0]}</Text>
+          </TouchableOpacity>
+        </View> 
+         )
+        }else{
+          return(<View/>)
+        }
+    }
+
+  
+    const Explore = () =>{
+      if (getDetails?.urls?.explorer?.length > 0) {
+
+        return(
+          <View style={styles.exploreContainer}>
+                  <Text style={styles.exploreText}> Explore</Text>
+                {  getDetails?.urls?.explorer?.length > 0 ? getDetails?.urls?.explorer?.map((item,index) =>(
+                  <TouchableOpacity key={index} onPress={()=> Linking.openURL(item)}>
+                    <Text style={styles.exploreLink}>{item}</Text>
+                  </TouchableOpacity>
+              )) : <Text/>}
+           </View> 
+        )
+      }else{
+        return(<View/>)
+      }
+    }
+
+
+
+     const Socials = () =>{
+       if (getDetails?.urls?.twitter[0] || getDetails?.urls?.reddit[0]) {
+
+        return(
+          <View style={styles.exploreContainer}>
+                     <Text style={styles.exploreText}> Socials</Text>
+                    <TouchableOpacity  onPress={()=> Linking.openURL(getDetails?.urls?.twitter[0])}>
+                        <Text style={styles.exploreLink}>{getDetails?.urls?.twitter[0]}</Text> 
+                    </TouchableOpacity >
+
+                    <TouchableOpacity  onPress={()=> Linking.openURL(getDetails?.urls?.reddit[0])}>
+                        <Text style={styles.exploreLink}>{getDetails?.urls?.reddit[0]}</Text> 
+                    </TouchableOpacity >
+
+                    <TouchableOpacity  onPress={()=> Linking.openURL(getDetails?.urls?.facebook[0])}>
+                        <Text style={styles.exploreLink}>{getDetails?.urls?.facebook[0]}</Text> 
+                    </TouchableOpacity >
+              </View> 
+        )
+      }else{
+        return(<View/>)
+      }
+     }
+
+
+
+
+
     return (
         <View  style={styles.container}>
-          <ScrollView >
+          {!isLoading? 
+          <ScrollView contentContainerStyle={{  paddingBottom:170}} >
            <View style={styles.headerContainer}>
              <View style={styles.coinNameContainer}>
              <View style={styles.rankContainer}>
-                 <Text styles={styles.rankText} >{data.item.cmc_rank}</Text>
+                 <Text styles={styles.rankText} >{data?.cmc_rank}</Text>
              </View>
                <Image  source={{uri: getDetails?.logo}} 
                  style={styles.image}/>
@@ -102,12 +235,17 @@ export default  function App(props) {
 
               </View>
            </View>
+
+           <View>
+               <LineCharts  width={370}  height={310}  chartsData={chartsData}/>
+                
+           </View>
           
            <View style={styles.priceContainer}>
-               <Text style={styles.priceText}>Market Cap:   {data.item.quote.USD.market_cap}</Text>
-                <Text style={styles.priceText}>Current Price (USD):   {data.item.quote.USD.price}</Text>
-              <Text style={styles.priceText}>Volume Change(24hr):   {data.item.quote.USD.volume_change_24h}</Text>
-               <Text style={styles.priceText}>Percentage Change(24hr):   {data.item.quote.USD.percent_change_24h}</Text>
+               <Text style={styles.priceText}>Market Cap:   {   data?.quote?.USD?.market_cap }</Text>
+                <Text style={styles.priceText}>Current Price (USD):   {  data?.quote?.USD?.price }</Text>
+              <Text style={styles.priceText}>Volume Change(24hr):   {   data?.quote?.USD?.volume_change_24h }</Text>
+               <Text style={styles.priceText}>Percentage Change(24hr):   {  data?.quote?.USD?.percent_change_24h }</Text>
                
            </View>
          { getDetails  && getDetails?.contract_address?.length  > 0 ? 
@@ -126,15 +264,35 @@ export default  function App(props) {
         
 
            <View  style={styles.chartContainer}>
-                  <LineCharts  width={370}  height={310}  chartsData={data.chartsData}/>
-                
+               
                 <View style={styles.descContainer}>
                     <Text style={styles.descText}>
                          {getDetails.description}
                     </Text>
                 </View>
+
+              <View style={styles.subContainer}>
+
+                <Websites />
+                <Announcement />
+                <Chat />
+                <Explore />
+                <Socials />
+
+               
+              </View>
+                
+
+            
            </View>
           </ScrollView> 
+          : 
+          <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignContent:'center', alignItems:'center'}}>
+       
+                    <ActivityIndicator animating={isLoading} size="large" color="black" />
+                    <Text>Loading  {getDetails?.name} Details....</Text>
+            </View>
+      }
             
         </View>
     );

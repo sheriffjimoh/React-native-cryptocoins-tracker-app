@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
 import EvilIcons from "react-native-vector-icons/EvilIcons"
+import { Ionicons } from "@expo/vector-icons";
+
 
 // screens
 import HomeScreen from "../../screens/homeScreen"
@@ -37,7 +39,8 @@ export default function MyTabs() {
                 tabBarInactiveTintColor: 'lightgrey',
                 tabBarIcon: (tabInfo) => {
                     return (
-                        <AntDesign name="home" size={30} color={ tabInfo.focused ? "#4845ff":"lightgrey"} />)
+                        <Ionicons name="home" size={30} color={ tabInfo.focused ? "#4845ff":"lightgrey"}  />
+                        )
                   },
             }} 
             
