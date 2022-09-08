@@ -8,13 +8,11 @@ var height = Dimensions.get('window').height; //full height
 
 export default StyleSheet.create({
    
-     
-    container:{
-        flex:1,
-        flexDirection:'row',
-        justifyContent:'center',
-         top:'10%'
-       },
-    
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    padding:10,
+     paddingTop:'20%'
+    },   
 });
 

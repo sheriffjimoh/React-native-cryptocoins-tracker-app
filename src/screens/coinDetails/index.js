@@ -1,14 +1,13 @@
 import react,{useEffect, useState, useRef} from "react";
 import {View, Text,Image, TouchableOpacity,Linking, ScrollView, ActivityIndicator} from "react-native"
 import styles  from  "./index.styles"
-const CoinMarketCap = require('coinmarketcap-api')
-const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
-const  client = new CoinMarketCap(apiKey)
+import client from "../../services/env";
 import LineCharts from "../../components/Chart"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Clipboard from 'expo-clipboard';
 import { customFlash } from "../../components/customFlashMessage/customFlash";
-
+import { AntDesign } from '@expo/vector-icons';
+import Loader from "../../components/Loader";
 
 
 export default  function App(props) {
@@ -19,6 +18,7 @@ export default  function App(props) {
  const [data, setData] = useState({quote: null})
  const [isLoading, setLoading] = useState(false)
  const [chartsData, setChartdata] = useState([]);
+ const [coinName, setCoinName] = useState("");
 
  const [copiedText, setCopiedText] = useState('');
 
@@ -27,11 +27,7 @@ export default  function App(props) {
     customFlash('success',`Token copied to the clipboard`)
     };
 
-    const scrollViewRef = useRef();
-const fetchCopiedText = async () => {
-    const text = await Clipboard.getStringAsync();
-    setCopiedText(text);
-  };
+
    
    function getConiDetails(){
     setLoading(true)
@@ -51,20 +47,20 @@ const fetchCopiedText = async () => {
            ];
 
            setChartdata(chartsData);
-         
-        // console.log("Tiker:",chartsData)
       }).catch((error) => console.log(error))
       .finally(() => setLoading(false))
     }
+ 
 
+    useEffect(() =>{
+      setCoinName(params?.item?.name)
+    },[params])
    useEffect(() => {
     client.getMetadata({id: params.coinID})
     .then((result) =>{
      const dataResult = Object.values(result.data)
      setDetails(dataResult[0]);
-
-   })
-    .catch((error) => console.error(error));
+    }).catch((error) => console.error(error));
 
     getConiDetails();
    
@@ -203,17 +199,37 @@ const fetchCopiedText = async () => {
      }
 
 
-
-
-
     return (
         <View  style={styles.container}>
           {!isLoading? 
-          <ScrollView contentContainerStyle={{  paddingBottom:170}} >
+          <ScrollView contentContainerStyle={{  paddingBottom:170}} showsVerticalScrollIndicator={false} >
+
+            {data?.cmc_rank == null ?
+                <View style={{ustifyContent:'space-between', width:'100%', flexDirection:'row',marginTop:50, padding:10,  backgroundColor:'red'}}>
+                     <TouchableOpacity onPress={()=> props.navigation.goBack()}> 
+                         <Text> <Icon name="angle-left" size={30} color="#fff" /> </Text>  
+                      </TouchableOpacity>
+                    
+                      <Text style={{color:'#fff', fontSize:20, textAlign:'center'}}>{'Not available in market'}</Text>
+                </View>
+                :
+                <View style={{justifyContent:'space-between', flexDirection:'row',marginTop:50,paddingRight:20, padding:10, alignItems:'center', backgroundColor:'green'}}>
+                     
+                     <TouchableOpacity onPress={()=> props.navigation.goBack()}> 
+                         <Text> <Icon name="angle-left" size={30} color="#fff" /> </Text>  
+                      </TouchableOpacity>
+                   
+                   
+                     <Text style={{color:'#fff', fontSize:20, textAlign:'center'}}>{'Available in market'}</Text>
+                </View>
+            }
+            
            <View style={styles.headerContainer}>
              <View style={styles.coinNameContainer}>
-             <View style={styles.rankContainer}>
-                 <Text styles={styles.rankText} >{data?.cmc_rank}</Text>
+             <View style={[styles.rankContainer, {display:data?.cmc_rank == null ? 'none': 'flex'}]}>
+                 <Text styles={styles.rankActiveText} >{data?.cmc_rank}
+                 
+                 </Text>
              </View>
                <Image  source={{uri: getDetails?.logo}} 
                  style={styles.image}/>
@@ -228,7 +244,7 @@ const fetchCopiedText = async () => {
                      </Text>
                  </View>
               </View>
-              <View style={styles.buttonContainer}>
+              <View style={[styles.buttonContainer, {display: data?.cmc_rank == null ? 'none': 'flex'}]}>
                   <TouchableOpacity  style={styles.button} onPress={()=> Linking.openURL(getDetails?.urls?.website[0])}>
                       <Text style={styles.buttonText}>Buy</Text>
                   </TouchableOpacity>
@@ -236,7 +252,7 @@ const fetchCopiedText = async () => {
               </View>
            </View>
 
-           <View>
+           <View style={{flex:1, alignItems:'center'}}>
                <LineCharts  width={370}  height={310}  chartsData={chartsData}/>
                 
            </View>
@@ -287,11 +303,7 @@ const fetchCopiedText = async () => {
            </View>
           </ScrollView> 
           : 
-          <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignContent:'center', alignItems:'center'}}>
-       
-                    <ActivityIndicator animating={isLoading} size="large" color="black" />
-                    <Text>Loading  {getDetails?.name} Details....</Text>
-            </View>
+          <Loader  textValue={`Loading  ${coinName} Details....`}  />
       }
             
         </View>

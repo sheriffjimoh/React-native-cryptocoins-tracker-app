@@ -13,15 +13,16 @@ export default StyleSheet.create({
         flexDirection:'row',
         padding:15,
         backgroundColor:'#fff',
-        height:76,
+        height:79,
         marginBottom:10,
+        alignItems:'center',
+        alignContent:'center'
      
        },
        rankContainer:{
            flexBasis:"9%",
            textAlign:'center',
            alignContent:'center',
-        //    backgroundColor:'#f4f4f4f4',
            padding:5,
            height:35,
            right:5,
@@ -49,7 +50,8 @@ export default StyleSheet.create({
        },
        priceText:{
            fontWeight:'bold',
-           width:76
+           width:70,
+           textAlign:'center'
        },
        bargecum:{
           padding:3,
@@ -74,7 +76,7 @@ export default StyleSheet.create({
 
        },
        priceContainer:{
-           top:10
+        //    top:10
        }
 });
 

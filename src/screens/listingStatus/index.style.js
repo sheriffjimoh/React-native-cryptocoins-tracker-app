@@ -74,6 +74,7 @@ export default StyleSheet.create({
         justifyContent:'center',
         alignContent:'center',
         height:40,
+        marginRight:10
     },
     buttonText:{
         textAlign:'center',
@@ -86,6 +87,15 @@ export default StyleSheet.create({
         backgroundColor:'#4845ff'
     },
     
-    
+    rowContainer:{
+        flexDirection:"row",
+        justifyContent:'space-between',
+        marginBottom:10
+    },
+    iconsContainer:{
+        fontWeight:'bold',
+        marginTop:12,
+        marginRight:10
+     }
 });
 

@@ -69,7 +69,7 @@ export default function MyTabs() {
             component={ListingStatus} />
 
 
-           <Tab.Screen
+           {/* <Tab.Screen
              name="Search"
              options={{
                 headerShown: false,
@@ -87,7 +87,7 @@ export default function MyTabs() {
                   },
             }} 
             
-            component={SearchScreen} />
+            component={SearchScreen} /> */}
 
 
 

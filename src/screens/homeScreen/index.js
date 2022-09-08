@@ -1,17 +1,20 @@
-import react,{useEffect, useState} from "react";
-import {View, Text,  ScrollView,TouchableOpacity,FlatList} from "react-native"
+import {useEffect, useState} from "react";
+import {View, Text,TouchableOpacity,KeyboardAvoidingView, FlatList, Platform} from "react-native"
 import styles  from  "./index.style"
 import CoinCard from "../../components/CoinCard"
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
-const CoinMarketCap = require('coinmarketcap-api')
-const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
-const  client = new CoinMarketCap(apiKey)
+import Loader from "../../components/Loader";
+import client from "../../services/env";
+import HeaderScreen from "../../components/ScreenHeader";
 
 export default  function App({navigation}) {
 
    const[getList, setList] = useState([]);
    const [activeTab, setActiveTab] = useState('top')
    const [isLoading, setIsLoading] = useState(true)
+   const [isSearch, setIsSearch] = useState(false);
+   const [textValue, setTextVlaue] = useState("");
+   const [searchList, setSearchList] = useState([])
    
    
    function getCoinsList(){
@@ -19,21 +22,71 @@ export default  function App({navigation}) {
         .then((response) => { 
             if (response.status) {
                setList(response.data);
-               setIsLoading(false)
+               setSearchList(response.data);
             }
-      
         })
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
+        .finally(()=> setIsLoading(false));
+   }
+
+
+   function getCoinsListForSearch(searchQ){
+      setIsLoading(true);
+      client.getTickers()
+      .then((response) => { 
+          if (response.status) {
+
+            const searchPoll = response.data;
+            const result = filterIt(searchPoll, searchQ);
+            setList(result);
+            setSearchList(response.data);
+          }
+      })
+      .catch((error) => console.log(error))
+      .finally(()=> setIsLoading(false));
+ }
+
+
+   function  onTabchange(value){
+          setActiveTab(value)
+   }
+
+   useEffect(() => {
+            getCoinsList();   
+   },[]);
+
+ 
+
+   function filterIt(arr, searchKey) {
+      return arr.filter(function(obj) {
+        return Object.values(obj).some(function(key) {
+          return obj.name?.toLowerCase().includes(searchKey) || obj.symbol?.toLowerCase().includes(searchKey);
+        })
+      });
     }
 
 
-     function  onTabchange(value){
-        setActiveTab(value)
-     }
 
-     useEffect(() => {
-            getCoinsList();   
-        },[]);
+function cancleSearch() {
+      if(textValue){
+           setTextVlaue("");
+           getCoinsList();
+      }
+}  
+
+function handleSearch(e){
+      const searchQ =  e.toLowerCase();
+      setTextVlaue(searchQ);
+      getCoinsListForSearch(searchQ);
+     
+}
+
+function  handleOnpress(){
+       setList(searchList),
+       setIsSearch(!isSearch),
+       handleSearch("")
+      
+   }
 
  const LoadCoins =()=>{
 
@@ -61,7 +114,6 @@ export default  function App({navigation}) {
         )}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item, index) => index}
-        // style={styles.scrollContainer}
         onRefresh={() => 
           getCoinsList()
         }
@@ -80,22 +132,26 @@ export default  function App({navigation}) {
    
     }else{
         return(
-            <View/>
+            <View style={{flex:1, justifyContent:'center'}}>
+                <Text style={{textAlign:'center', fontWeight:'600',  fontSize:15}}>
+
+                   {isSearch ? 'No result found for '+textValue : ' No result found' }
+                   </Text>
+            </View>
         )
     }
   
  }
    
+
     return (
-        <View  style={styles.container}>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  style={styles.container}>
 
            
             <View style={styles.filterContainer}>
-                    
-                    <Text style={styles.leftsideText}>USD</Text>
-                    <Text style={styles.cointitle}>Coins</Text>
+               <HeaderScreen isSearch={isSearch} symbol={'USD'} title={'Coins'} onpress={handleOnpress} handleSearch={handleSearch} textValue={textValue}  cancleSearch={cancleSearch} />
 
-                     <View style={styles.filters}>
+                    <View style={styles.filters}>
                           <TouchableOpacity style={[styles.button, activeTab == 'top' ? styles.activeButton : '']}
                           onPress={()=> onTabchange('top')}
                           >
@@ -112,19 +168,24 @@ export default  function App({navigation}) {
                      </View>
                 </View>
          
-
-            <View  style={styles.listTitleContainer}>
-                 <Text style={styles.listTitle}>Coin</Text>
-                 <Text  style={styles.listTitle}>Charts</Text>
-
-                 <Text  style={styles.listTitlel}> { activeTab == 'cap' ? 'Market Cap' : 'Price / % change 24hr '}</Text>
-            </View>
-          
-                <View style={{flex:1,  marginTop:20}}>
-                  <LoadCoins />
-                </View>
+              {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              style={styles.avoidCotainer}
+              > */}
+                     <View  style={styles.listTitleContainer}>
+                        <Text style={styles.listTitle}>Coin</Text>
+                        <Text  style={styles.listTitle}>Charts</Text>
+                        <Text  style={styles.listTitlel}> { activeTab == 'cap' ? 'Market Cap' : 'Price / % change 24hr '}</Text>
+                     </View>
+                     <View style={{flex:1,  marginTop:20}}>
+                           {!isLoading ?
+                              <LoadCoins />
+                           :
+                              <Loader  textValue={'Loading  Coins....'} />
+                           }
+                     </View>
+               {/* </KeyboardAvoidingView>      */}
                
           
-        </View>
+        </KeyboardAvoidingView>
     );
   }

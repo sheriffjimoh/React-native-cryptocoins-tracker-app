@@ -5,9 +5,7 @@ import styles  from  "./index.style"
 export default function App(props){
 
     const {id, name,symbol,rank,last_historical_data} = props.data;
- 
 
-    console.log(props.data)
     return(
 
       

@@ -1,19 +1,26 @@
-import react , {useState, useEffect} from "react";
-import {View, Text, TouchableOpacity, ScrollView, FlatList} from "react-native"
+import {useState, useEffect} from "react";
+import {View, Text, TouchableOpacity, KeyboardAvoidingView,Platform, FlatList} from "react-native"
 import styles  from  "./index.style"
-import LineChart from "../../components/Chart"
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons"
 import Ionicons from  "react-native-vector-icons/Ionicons"
 import ListingCard from "../../components/ListingCard"
-const CoinMarketCap = require('coinmarketcap-api')
-const apiKey = 'fa55b789-fae7-45c7-8627-9fee4681b042'
-const  client = new CoinMarketCap(apiKey)
+import client from "../../services/env";
+import SearchBar from '../../components/SearchBar';
+import { MaterialIcons } from '@expo/vector-icons'; 
+import HeaderScreen from "../../components/ScreenHeader";
+import Loader from "../../components/Loader";
+
+
 export default  function App(props) {
     const [activeTab, setActiveTab] = useState('active');
-     const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [getList, setList] = useState([]);
+    const [isSearch, setIsSearch] = useState(false);
+    const [textValue, setTextVlaue] = useState("");
+    const [searchList, setSearchList] = useState([])
 
-    function getCoinsList(value = activeTab){
+
+
+function getCoinsList(value = activeTab){
         setIsLoading(true)
         setActiveTab(value)
         
@@ -21,24 +28,59 @@ export default  function App(props) {
         .then((response) => {  
             if(response.status){
                 setList(response.data);
+                setSearchList(response.data)
                 setIsLoading(false)
             }
         })
         .catch((error) => console.log(error));
-        console.log("status:", activeTab) 
  }
 
 
-
- function onTabchange(value){
-   
-    getCoinsList(value)
+function onTabchange(value){
+     getCoinsList(value)
  }
-
+  
  useEffect(() => {
-        getCoinsList();   
-       
- },[]);
+   getCoinsList();   
+  },[]);
+
+
+  function filterIt(arr, searchKey) {
+    return arr.filter(function(obj) {
+      return Object.values(obj).some(function(key) {
+        return obj.name?.toLowerCase().includes(searchKey) || obj.symbol?.toLowerCase().includes(searchKey);
+      })
+    });
+  }
+
+
+
+  function handleSearch(e){
+    setIsLoading(true)
+    const searchQ =  e.toLowerCase();
+    setTextVlaue(searchQ);
+    const searchPoll = searchList;
+    const result = filterIt(searchPoll, searchQ);
+    setList(result);
+    setIsLoading(false)
+
+ }
+
+ function cancleSearch() {
+  if(textValue){
+       setTextVlaue("");
+       getCoinsList();
+  }
+}  
+
+
+
+function  handleOnpress(){
+   setList(searchList),
+   setIsSearch(!isSearch),
+   handleSearch("")
+  
+}
 
     const LoadCoins = () =>{
             
@@ -62,17 +104,23 @@ export default  function App(props) {
 
       }else{
           return(
-              <View/>
+            <View style={{flex:1, justifyContent:'center'}}>
+            <Text style={{textAlign:'center', fontWeight:'600',  fontSize:15}}>
+                   {isSearch ? 'No result found for '+textValue : ' No result found' }
+               </Text>
+        </View>
           )
       }
     }
 
     return (
-        <View  style={styles.container}>
-               <View style={styles.filterContainer}>
-                    <Text style={styles.cointitle}>Coins Status</Text>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  style={styles.container}>
 
-                     <View style={styles.filters}>
+
+               <View style={styles.filterContainer}>
+                    <HeaderScreen isSearch={isSearch}  title={'Coins Status'} onpress={handleOnpress} handleSearch={handleSearch} textValue={textValue}  cancleSearch={cancleSearch} />
+                      
+                      <View style={styles.filters}>
                           <TouchableOpacity style={[styles.button, activeTab == 'active' ? styles.activeButton : '']}
                           onPress={()=>{
                            onTabchange('active')
@@ -83,8 +131,9 @@ export default  function App(props) {
                                </Ionicons>
                           </TouchableOpacity>
                           <TouchableOpacity style={[styles.button,activeTab == 'inactive' ? {backgroundColor:'red'}: '']} onPress={()=>{
-                              onTabchange('inactive')
-                          }}>
+                            onTabchange('inactive')
+                          }} 
+                          >
                                <Text style={[styles.buttonText,{marginLeft:8} , activeTab == 'inactive' ? {color:'#fff'} : '']}>In Active  </Text>
                                <Ionicons  name="close-sharp" size={20} color={activeTab == 'inactive' ? "#fff": "#4845ff"}/>
                           </TouchableOpacity>
@@ -99,11 +148,14 @@ export default  function App(props) {
                  <Text  style={styles.listTitle}>Last Hist. Data</Text>
            </View>
           
-
+         { !isLoading ?
            <LoadCoins />
 
+           :
+           <Loader textValue={`Loading ${activeTab} Coins....`}   />
+          }
 
 
-        </View>
+        </KeyboardAvoidingView>
     );
   }

@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 const Stack = createStackNavigator();
 
 import BottomTab from "../BottomTab";
-import Settings from "../../screens/settingScreen"
 import CoinDetails from "../../screens/coinDetails"
 
 export default function NavStack() {
@@ -12,7 +11,7 @@ export default function NavStack() {
       <NavigationContainer>
             <Stack.Navigator initialRouteName="HomeScreen">
              <Stack.Screen options={{headerShown: false,}} name="Home" component={BottomTab} />
-              <Stack.Screen name="CoinDetails" initialParams={{data: null}} component={CoinDetails} />
+              <Stack.Screen  options={{headerShown: false,}} name="CoinDetails" initialParams={{data: null}} component={CoinDetails} />
         </Stack.Navigator>
     </NavigationContainer>
   );

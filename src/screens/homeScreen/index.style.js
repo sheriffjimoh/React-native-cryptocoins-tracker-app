@@ -9,7 +9,7 @@ var height = Dimensions.get('window').height; //full heigth
 export default StyleSheet.create({
    
     container:{
-     flex:1,
+    //  flex:1,
      flexDirection:'column',
      padding:10,
      backgroundColor:'#fff',
@@ -86,6 +86,18 @@ export default StyleSheet.create({
      },
      activeButton:{
          backgroundColor:'#4845ff'
+     },
+     rowContainer:{
+         flexDirection:"row",
+         justifyContent:'space-between'
+     },
+     iconsContainer:{
+        fontWeight:'bold',
+        marginTop:12,
+        marginRight:10
+     },
+     avoidContainer:{
+         flex:1
      }
 });
 

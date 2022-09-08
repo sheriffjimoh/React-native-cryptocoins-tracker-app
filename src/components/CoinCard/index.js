@@ -38,8 +38,8 @@ export default  function App(props) {
         )
        }else{
            return( 
-           <View style={{width:100, overflowX:'scroll',  marginLeft:20}}>
-              <Text  tyle={styles.priceText} > {Math.round(marketcap * 1000) / 1000} </Text>
+           <View style={{width:100, overflow:'scroll', marginLeft:10}}>
+              <Text  style={styles.priceText} > {Math.round(marketcap * 1000) / 1000} </Text>
           </View>    
         )     
        }

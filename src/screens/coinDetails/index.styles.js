@@ -7,7 +7,6 @@ var height = Dimensions.get('window').height; //full height
 
 
 export default StyleSheet.create({
-   
      
     container:{
         flex:1,
@@ -56,7 +55,8 @@ export default StyleSheet.create({
   },
   coinName:{
     fontWeight:'600',
-    fontSize:16
+    fontSize:16,
+    width:80
   },
   coinSymbol:{
     fontWeight:'600',
