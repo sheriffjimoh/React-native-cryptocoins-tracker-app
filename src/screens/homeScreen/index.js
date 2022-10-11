@@ -47,13 +47,13 @@ export default  function App({navigation}) {
  }
 
 
-   function  onTabchange(value){
+function  onTabchange(value){
           setActiveTab(value)
    }
 
    useEffect(() => {
-            getCoinsList();   
-   },[]);
+       getCoinsList();   
+   },[getList]);
 
  
 
@@ -86,7 +86,7 @@ function  handleOnpress(){
        setIsSearch(!isSearch),
        handleSearch("")
       
-   }
+}
 
  const LoadCoins =()=>{
 
@@ -167,11 +167,9 @@ function  handleOnpress(){
                           </TouchableOpacity>
                      </View>
                 </View>
-         
-              {/* <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-              style={styles.avoidCotainer}
-              > */}
-                     <View  style={styles.listTitleContainer}>
+                  
+                  
+                   <View  style={styles.listTitleContainer}>
                         <Text style={styles.listTitle}>Coin</Text>
                         <Text  style={styles.listTitle}>Charts</Text>
                         <Text  style={styles.listTitlel}> { activeTab == 'cap' ? 'Market Cap' : 'Price / % change 24hr '}</Text>
@@ -183,9 +181,7 @@ function  handleOnpress(){
                               <Loader  textValue={'Loading  Coins....'} />
                            }
                      </View>
-               {/* </KeyboardAvoidingView>      */}
-               
-          
+   
         </KeyboardAvoidingView>
     );
   }

@@ -24,7 +24,6 @@ return(
             backgroundColor: "#fff",
             backgroundGradientFrom: "#faf3b1",
             backgroundGradientTo: "blue",
-            // decimalPlaces: 2, // optional, defaults to 2dp
             color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             style: {
@@ -40,7 +39,6 @@ return(
             // bezier
             style={{
             marginVertical: 8,
-            // borderRadius: 16
             }}
         />
 </View>

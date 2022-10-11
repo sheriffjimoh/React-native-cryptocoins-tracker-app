@@ -1,17 +1,13 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 
 // fonts
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5"
-import EvilIcons from "react-native-vector-icons/EvilIcons"
 import { Ionicons } from "@expo/vector-icons";
 
 
 // screens
 import HomeScreen from "../../screens/homeScreen"
 import ListingStatus from "../../screens/listingStatus"
-import SearchScreen from "../../screens/searchScreen"
 
 
 export default function MyTabs() {
@@ -67,29 +63,6 @@ export default function MyTabs() {
             }} 
             
             component={ListingStatus} />
-
-
-           {/* <Tab.Screen
-             name="Search"
-             options={{
-                headerShown: false,
-                tabBarLabel: "Search",
-                tabBarLabelStyle: {
-                    fontSize: 15,
-                    marginBottom:10
-                    },
-               
-                tabBarActiveTintColor: '#4845ff',
-               tabBarInactiveTintColor: 'lightgrey',
-                tabBarIcon: (tabInfo) => {
-                    return (
-                        <EvilIcons name="search" size={30} color={ tabInfo.focused ? "#4845ff":"lightgrey"} />)
-                  },
-            }} 
-            
-            component={SearchScreen} /> */}
-
-
 
             </Tab.Navigator>
   );

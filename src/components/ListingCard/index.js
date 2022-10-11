@@ -9,7 +9,7 @@ export default function App(props){
     return(
 
       
-        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('CoinDetails', {data: {coinID:id, }})}  
+        <TouchableWithoutFeedback onPress={() => props.navigation.navigate('CoinDetails', {data: {coinID:id,item:{name} }})}  
             >
                   <View style={styles.container}>
             <View style={styles.rankContainer}>

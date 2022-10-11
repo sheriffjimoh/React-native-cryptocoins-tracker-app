@@ -139,7 +139,6 @@ ContainerAddressCard:{
   marginRight:15
 },
 plat:{
-  // font
   fontFamily:'Avenir',
   fontWeight:'900',
   textTransform:'uppercase',

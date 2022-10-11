@@ -23,13 +23,18 @@ export default  function App(props) {
 function getCoinsList(value = activeTab){
         setIsLoading(true)
         setActiveTab(value)
-        
         client.getIdMap({listingStatus: value, })
         .then((response) => {  
             if(response.status){
-                setList(response.data);
+
+                setList(response.data.sort((a, b) => a.rank - b.rank));
                 setSearchList(response.data)
                 setIsLoading(false)
+
+                if(textValue !== ""){
+                  console.log('textValue:', textValue)
+                  handleSearch(textValue);
+                 }
             }
         })
         .catch((error) => console.log(error));
@@ -37,12 +42,13 @@ function getCoinsList(value = activeTab){
 
 
 function onTabchange(value){
-     getCoinsList(value)
+  getCoinsList(value)
+    
  }
   
  useEffect(() => {
-   getCoinsList();   
-  },[]);
+  getCoinsList();   
+  },[activeTab]);
 
 
   function filterIt(arr, searchKey) {
@@ -61,7 +67,7 @@ function onTabchange(value){
     setTextVlaue(searchQ);
     const searchPoll = searchList;
     const result = filterIt(searchPoll, searchQ);
-    setList(result);
+    setList(result.sort((a, b) => a.rank - b.rank));
     setIsLoading(false)
 
  }
@@ -84,12 +90,12 @@ function  handleOnpress(){
 
     const LoadCoins = () =>{
             
-     if(getList.length > 1){
+     if(getList?.length > 1){
         return(
             <FlatList
             data={getList}
             renderItem={({ item, index, separators }) => (
-                <ListingCard key={index}  navigation={props.navigation} rank={index+1} data={item} />
+                <ListingCard key={index}  navigation={props.navigation} rank={item.rank ?  item.rank : index + 1} data={item} />
             
             )}
             showsVerticalScrollIndicator={false}
@@ -152,7 +158,7 @@ function  handleOnpress(){
            <LoadCoins />
 
            :
-           <Loader textValue={`Loading ${activeTab} Coins....`}   />
+           <Loader textValue={`Loading ${activeTab} coins....`}   />
           }
 
 

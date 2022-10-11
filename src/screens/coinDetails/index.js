@@ -1,13 +1,13 @@
-import react,{useEffect, useState, useRef} from "react";
-import {View, Text,Image, TouchableOpacity,Linking, ScrollView, ActivityIndicator} from "react-native"
+import {useEffect, useState} from "react";
+import {View, Text,Image, TouchableOpacity,Linking, ScrollView} from "react-native"
 import styles  from  "./index.styles"
 import client from "../../services/env";
 import LineCharts from "../../components/Chart"
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Clipboard from 'expo-clipboard';
 import { customFlash } from "../../components/customFlashMessage/customFlash";
-import { AntDesign } from '@expo/vector-icons';
 import Loader from "../../components/Loader";
+import DetailsHeader from "../../components/DetailsHeader"
 
 
 export default  function App(props) {
@@ -55,6 +55,8 @@ export default  function App(props) {
     useEffect(() =>{
       setCoinName(params?.item?.name)
     },[params])
+
+
    useEffect(() => {
     client.getMetadata({id: params.coinID})
     .then((result) =>{
@@ -79,7 +81,7 @@ export default  function App(props) {
                           <Text>{item.platform.coin.name}</Text>
                 </View>
                 <View style={styles.addCon}>
-                    <Text>{`${item.contract_address.substring(0, 5)}...${item.contract_address.substring(37, 44)}`}
+                    <Text>{`${item.contract_address.substring(0, 5)}...${item.contract_address.substring(item.contract_address.length - 5, item.contract_address.length)}`}
                  
                     </Text>
                     <TouchableOpacity  style={styles.copyButton} onPress={() => copyToClipboard(item.contract_address)}>
@@ -202,29 +204,12 @@ export default  function App(props) {
     return (
         <View  style={styles.container}>
           {!isLoading? 
-          <ScrollView contentContainerStyle={{  paddingBottom:170}} showsVerticalScrollIndicator={false} >
 
-            {data?.cmc_rank == null ?
-                <View style={{ustifyContent:'space-between', width:'100%', flexDirection:'row',marginTop:50, padding:10,  backgroundColor:'red'}}>
-                     <TouchableOpacity onPress={()=> props.navigation.goBack()}> 
-                         <Text> <Icon name="angle-left" size={30} color="#fff" /> </Text>  
-                      </TouchableOpacity>
-                    
-                      <Text style={{color:'#fff', fontSize:20, textAlign:'center'}}>{'Not available in market'}</Text>
-                </View>
-                :
-                <View style={{justifyContent:'space-between', flexDirection:'row',marginTop:50,paddingRight:20, padding:10, alignItems:'center', backgroundColor:'green'}}>
-                     
-                     <TouchableOpacity onPress={()=> props.navigation.goBack()}> 
-                         <Text> <Icon name="angle-left" size={30} color="#fff" /> </Text>  
-                      </TouchableOpacity>
-                   
-                   
-                     <Text style={{color:'#fff', fontSize:20, textAlign:'center'}}>{'Available in market'}</Text>
-                </View>
-            }
-            
-           <View style={styles.headerContainer}>
+          <View>
+              <DetailsHeader  navigation={props.navigation} status={data?.cmc_rank == null} />
+          
+
+              <View style={styles.headerContainer}>
              <View style={styles.coinNameContainer}>
              <View style={[styles.rankContainer, {display:data?.cmc_rank == null ? 'none': 'flex'}]}>
                  <Text styles={styles.rankActiveText} >{data?.cmc_rank}
@@ -236,7 +221,7 @@ export default  function App(props) {
 
                  <View style={styles.contentContainer}>
                     
-                     <Text style={styles.coinName}>
+                     <Text style={[styles.coinName, data?.cmc_rank == null ? { width: '100%'} : '']}>
                          {getDetails?.name}
                      </Text>
                      <Text style={styles.coinSymbol}>
@@ -251,6 +236,11 @@ export default  function App(props) {
 
               </View>
            </View>
+
+
+          <ScrollView contentContainerStyle={{  paddingBottom:170}} showsVerticalScrollIndicator={false} >
+           
+          
 
            <View style={{flex:1, alignItems:'center'}}>
                <LineCharts  width={370}  height={310}  chartsData={chartsData}/>
@@ -302,6 +292,8 @@ export default  function App(props) {
             
            </View>
           </ScrollView> 
+         </View>
+
           : 
           <Loader  textValue={`Loading  ${coinName} Details....`}  />
       }
